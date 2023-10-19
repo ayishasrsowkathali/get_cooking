@@ -1,0 +1,37 @@
+body{
+    padding:100;
+}
+
+.container{
+    max-width: 600px;
+    margin:0 auto;
+    /* padding:50px; */
+}
+.form-group{
+    margin-bottom:30px;
+}
+
+/* style recipe.php */
+.recipe-card {
+    display: inline-block;
+    margin: 30px;
+    text-align: center;
+    border: 1px solid black;
+}
+.recipe-card img {
+    width: 300px;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* style view_recipe.php */
+.recipe-instructions {
+    margin-left: 100px; /* Adjust the margin value as needed */
+}
+
+footer {
+    text-align: center;
+    padding: 0.5px;
+    background-color: black;
+    color: white;
+}
