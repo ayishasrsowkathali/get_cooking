@@ -34,7 +34,7 @@ if (!isset($_SESSION["user"])) {
                     <a class="nav-link" href="recipe.php">Recipes </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> Metrics </a>
+                    <a class="nav-link" href="metric.php"> Metrics </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="userpage.php">
@@ -61,6 +61,25 @@ if (!isset($_SESSION["user"])) {
     <div class = "saved-recipes-container">
         <h1> My Saved Recipes </h1>
         <?php
+
+            // Fetch recipes from the database
+                $sql = "SELECT RecipeID, RecipeName, ImageURL FROM Recipes";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Output the recipes as a grid of clickable images
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<div class="recipe-card">';
+                        echo '<a href="view_recipe.php?recipe_id=' . $row["RecipeID"] . '">';
+                        echo '<img src="' . $row["ImageURL"] . '" alt="' . $row["RecipeName"] . '">';
+                        echo '<h5>' . $row["RecipeName"] . '</h5>';
+                        echo '</a>';
+                        echo '</div>';
+                    }
+                } else {
+                    echo "No recipes found.";
+                }
+            mysqli_close($conn); // Close the database connection
         ?>
     </div>
 </body>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2023 at 12:42 PM
+-- Generation Time: Oct 20, 2023 at 03:38 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -84,6 +84,26 @@ INSERT INTO `ingredients` (`IngredientID`, `RecipeID`, `IngredientName`, `Amount
 (44, 4, 'Curry leaves', '1 sprig'),
 (45, 4, 'Coconut oil', '1 tbsp'),
 (46, 4, 'Salt', '1 tsp');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `measurments`
+--
+
+CREATE TABLE `measurments` (
+  `Cup` varchar(128) NOT NULL,
+  `Ounces` varchar(128) NOT NULL,
+  `MilliLiters` varchar(128) NOT NULL,
+  `Tablespoons` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `measurments`
+--
+
+INSERT INTO `measurments` (`Cup`, `Ounces`, `MilliLiters`, `Tablespoons`) VALUES
+('8 cups', '64 ounces', '1895 ml', '128 tbsp');
 
 -- --------------------------------------------------------
 

@@ -9,6 +9,8 @@ include 'connect.php'; // Include the database connection file
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include stylesheet -->
+    <link rel="stylesheet" href="style.css">
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Include Bootstrap JavaScript (Popper.js is required) -->
@@ -16,7 +18,7 @@ include 'connect.php'; // Include the database connection file
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Include Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
-    <title> Search Results</title>
+    <title>Get Cooking</title>
 </head>
 <body>
     <header class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -41,54 +43,52 @@ include 'connect.php'; // Include the database connection file
             </ul>
             <form method="POST" action="search.php" class="d-flex">
                 <div class="input-group mb-3">
-                    <input class="form-control" name="recipeName" type="text" placeholder="Search" aria-label="Search for a recipe">
+                    <input class="form-control" name="recipeName" type="text" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-primary" type="submit" name="search">Search</button>
                 </div>
             </form>
         </div>
     </header>
 
-    <div class="container mt-4">        
+    <div id="metrics-container">
+        <h1>Meausurement Conversion Chart</h1>
+
         <?php
-        // Check if the search form is submitted
-        if (isset($_POST['search'])) { 
-            $searchTerm = $_POST['recipeName'];
-            // Query to retrieve recipes from the database
-            $recipeSql = "SELECT RecipeID, RecipeName, Category, Instructions, ImageURL FROM Recipes WHERE RecipeName LIKE '%$searchTerm%'";
-            $recipeResult = mysqli_query($conn, $recipeSql);
-            
+            // Fetch measurement chart from the database
+            $sql = "SELECT Cup, Ounces, MilliLiters, Tablespoons FROM measurements";
+            $result = $conn->query($sql);
 
-
-            if (mysqli_num_rows($recipeResult) > 0) {
-                while ($recipeRow = mysqli_fetch_assoc($recipeResult)) {
-                    echo '<div class="recipe">';
-                    echo '<h2>' . $recipeRow['RecipeName'] . '</h2>';
-                    echo '<p><strong>Category:</strong> ' . $recipeRow['Category'] . '</p>';
-
-                    // Query to retrieve ingredients for this recipe
-                    $ingredientSql = "SELECT * FROM Ingredients WHERE RecipeID = " . $recipeRow['RecipeID'];
-                    $ingredientResult = mysqli_query($conn, $ingredientSql);
-
-                    if (mysqli_num_rows($ingredientResult) > 0) {
-                        echo '<p><strong>Ingredients:</strong></p>';
-                        echo '<ul>';
-                        while ($ingredientRow = mysqli_fetch_assoc($ingredientResult)) {
-                            echo '<li>' . $ingredientRow['IngredientName'] . "\t-\t". $ingredientRow['Amount'] . '</li>';
-                        }
-                        echo '</ul>';
-                    }
-
-                    echo '<p><strong>Instructions:</strong><p>';
-                    echo '<p>' . nl2br($recipeRow['Instructions']) . '</p>';
-                    echo '</div>';
+            // Display measurement chart
+            if ($result->num_rows > 0) {
+                echo "<table class='table table-striped table-hover'>";
+                echo "<thead>";
+                echo "<tr>";
+                echo "<th scope='col'>Cup</th>";
+                echo "<th scope='col'>Ounces</th>";
+                echo "<th scope='col'>MilliLiters</th>";
+                echo "<th scope='col'>Tablespoons</th>";
+                echo "</tr>";
+                echo "</thead>";
+                echo "<tbody>";
+                while($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row["Cup"] . "</td>";
+                    echo "<td>" . $row["Ounces"] . "</td>";
+                    echo "<td>" . $row["MilliLiters"] . "</td>";
+                    echo "<td>" . $row["Tablespoons"] . "</td>";
+                    echo "</tr>";
                 }
+                echo "</tbody>";
+                echo "</table>";
             } else {
-                echo '<p>No recipes found.</p>';
+                echo "0 results";
             }
-
             mysqli_close($conn); // Close the database connection
-        }
+
         ?>
     </div>
+    <footer>
+        <p>&copy; 2023 Get Cooking</p>
+    </footer>
 </body>
 </html>

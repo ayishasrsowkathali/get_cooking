@@ -27,7 +27,7 @@
                     <a class="nav-link" href="recipe.php">Recipes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Metrics</a>
+                    <a class="nav-link" href="metric.php">Metrics</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="login.php">
